@@ -3,11 +3,11 @@ FROM alpine:edge
 
 RUN apk add --no-cache php-cli php-mysqli php-ctype php-xml php-gd php-zlib php-openssl php-curl php-opcache php-json php-mcrypt curl
 
-RUN curl --location https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz | tar xzf - \
- && mv phpMyAdmin* /www \
- && rm -rf /www/js/jquery/src/ /www/examples /www/po/
+RUN mkdir /www; curl --location https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz | tar xzf - -C /www \
+ && mv /www/phpMyAdmin* /www/phpMyAdmin \
+ && rm -rf /www/phpMyAdmin/js/jquery/src/ /www/phpMyAdmin/examples /www/phpMyAdmin/po/
 
-COPY config.inc.php /www/
+COPY config.inc.php /www/phpMyAdmin
 COPY run.sh /run.sh
 RUN chmod u+rwx /run.sh
 
